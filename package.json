@@ -1,0 +1,15 @@
+{
+  "name": "SoundCloudPodcast",
+  "version": "0.0.1",
+  "description": "A simple NodeJS app to get an iTunes-like podcast from a Soundcloud user/playlist/set",
+  "main": "app/server.js",
+  "devDependencies": {
+    "handlebars": "^2.0.0-alpha.4",
+    "request": "^2.37.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Damien Erambert",
+  "license": "MIT"
+}

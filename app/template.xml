@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+    <channel>
+        <title>{{title}}</title>
+        <link>{{website}}</link>
+        <language>en-US</language>
+        <copyright>{{fullname}} - {{website}}</copyright>
+        <itunes:subtitle>{{description}}</itunes:subtitle>
+        <itunes:author>{{fullname}}</itunes:author>
+        <itunes:summary>{{description}}</itunes:summary>
+        <description>{{description}}</description>
+        <itunes:owner>
+            <itunes:name>{{fullname}}</itunes:name>
+            <itunes:email></itunes:email>
+        </itunes:owner>
+        <itunes:image href="{{avatar}}" />
+        <itunes:category text="Music" />
+        <itunes:explicit>no</itunes:explicit>
+        {{#items}}      
+        <item>
+            <title>{{title}}</title>
+            <description>{{description}}</description>
+            <itunes:author>{{author}}</itunes:author>
+            <itunes:subtitle>{{title}}</itunes:subtitle>
+            <itunes:summary>{{description}}</itunes:summary>
+            <itunes:image href="{{artwork}}" />
+            <enclosure type="audio/mpeg" url="{{file_url}}" length="{{length}}" />
+            <guid>{{guid}}</guid>
+            <pubDate>{{created_at}}</pubDate>
+            <itunes:duration>{{duration}}</itunes:duration>
+            <itunes:keywords>{{tag_list}}</itunes:keywords>
+        </item>
+        {{/items}}                   
+    </channel>
+</rss>
