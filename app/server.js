@@ -58,6 +58,7 @@ var server = http.createServer(function(req, res) {
 		request('http://api.soundcloud.com/resolve.json?url=' + SCURL + '&client_id=' + config.soundcloud_key, function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				var resJson = JSON.parse(body);
+				res.writeHead({"Content-Type": "application/json"});
 				if (resJson.kind === "playlist" || resJson.kind === "user") {
 					res.write(JSON.stringify({valid: true}));
 					res.end();
