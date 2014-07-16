@@ -66,6 +66,9 @@ var server = http.createServer(function(req, res) {
 					res.write(JSON.stringify({valid: false}));
 					res.end();
 				}
+			} else {
+				res.write(JSON.stringify({valid: false}));
+				res.end();
 			}
 		});
 	} else {
