@@ -15,6 +15,7 @@ try {
 
 
 var server = http.createServer(function(req, res) {
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var REQURL = url.parse(req.url);
 	if (REQURL.pathname == "/podcast" && querystring.parse(url.parse(req.url).query).url) {
 		var SCURL = querystring.parse(url.parse(req.url).query).url;
