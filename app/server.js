@@ -53,6 +53,20 @@ var server = http.createServer(function(req, res) {
 			res.write("iTunes and likes are the only ones authorized!");
 			res.end();
 		}
+	} else if (REQURL.pathname == "/validate" && querystring.parse(url.parse(req.url).query).url) {
+		var SCURL = querystring.parse(url.parse(req.url).query).url;
+		request('http://api.soundcloud.com/resolve.json?url=' + SCURL + '&client_id=' + config.soundcloud_key, function(error, response, body) {
+			if (!error && response.statusCode == 200) {
+				var resJson = JSON.parse(body);
+				if (resJson.kind === "playlist" || resJson.kind === "user") {
+					res.write(JSON.stringify({valid: true}));
+					res.end();
+				} else {
+					res.write(JSON.stringify({valid: false}));
+					res.end();
+				}
+			}
+		});
 	} else {
 		res.write("");
 		res.end();

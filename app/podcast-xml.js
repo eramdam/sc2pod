@@ -45,6 +45,8 @@ exports.getXML = function(sc_key, url, callback) {
 						throw err;
 					}
 				});
+			} else {
+				callback('Please provide a set, a playlist or an user link.');
 			}
 		} else {
 			callback("Not found");
