@@ -15,7 +15,9 @@ try {
 
 
 var server = http.createServer(function(req, res) {
-	res.setHeader("Access-Control-Allow-Origin", "*");
+	var proxyOut = res;
+	proxyOut.setHeader('Access-Control-Allow-Origin', '*');
+	proxyOut.setHeader('Access-Control-Request-Headers', 'x-requested-with, content-type, accept, origin, authorization, x-csrftoken');
 	var REQURL = url.parse(req.url);
 	if (REQURL.pathname == "/podcast" && querystring.parse(url.parse(req.url).query).url) {
 		var SCURL = querystring.parse(url.parse(req.url).query).url;
@@ -28,7 +30,7 @@ var server = http.createServer(function(req, res) {
 		var trackId = url.parse(req.url).path.split("/").pop().split(".").shift();
 		var UA = req.headers["user-agent"];
 		var regex = "Mozilla|HTML|Gecko|Firefox";
-		var proxyOut = res;
+
 
 		if (!(new RegExp(regex).test(UA))) {
 			console.log(UA);
@@ -45,36 +47,36 @@ var server = http.createServer(function(req, res) {
 					}
 				} else if (err) {
 					throw err;
-					res.end();
+					proxyOut.end();
 				}
 			});
 
 		} else {
-			res.writeHead(403);
-			res.write("iTunes and likes are the only ones authorized!");
-			res.end();
+			proxyOut.writeHead(403);
+			proxyOut.write("iTunes and likes are the only ones authorized!");
+			proxyOut.end();
 		}
 	} else if (REQURL.pathname == "/validate" && querystring.parse(url.parse(req.url).query).url) {
 		var SCURL = querystring.parse(url.parse(req.url).query).url;
 		request('http://api.soundcloud.com/resolve.json?url=' + SCURL + '&client_id=' + config.soundcloud_key, function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				var resJson = JSON.parse(body);
-				res.writeHead({"Content-Type": "application/json"});
+				proxyOut.writeHead({"Content-Type": "application/json"});
 				if (resJson.kind === "playlist" || resJson.kind === "user") {
-					res.write(JSON.stringify({valid: true}));
-					res.end();
+					proxyOut.write(JSON.stringify({valid: true}));
+					proxyOut.end();
 				} else {
-					res.write(JSON.stringify({valid: false}));
-					res.end();
+					proxyOut.write(JSON.stringify({valid: false}));
+					proxyOut.end();
 				}
 			} else {
-				res.write(JSON.stringify({valid: false}));
-				res.end();
+				proxyOut.write(JSON.stringify({valid: false}));
+				proxyOut.end();
 			}
 		});
 	} else {
-		res.write("");
-		res.end();
+		proxyOut.write("");
+		proxyOut.end();
 	}
 }).listen(config.port);
 
