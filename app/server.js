@@ -61,16 +61,16 @@ var server = http.createServer(function(req, res) {
 		request('http://api.soundcloud.com/resolve.json?url=' + SCURL + '&client_id=' + config.soundcloud_key, function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				var resJson = JSON.parse(body);
-				proxyOut.writeHead({"Content-Type": "application/json"});
+				proxyOut.setHeader("Content-Type", "application/json");
 				if (resJson.kind === "playlist" || resJson.kind === "user") {
-					proxyOut.write(JSON.stringify({valid: true}));
+					proxyOut.write(JSON.stringify({"valid": "true"}));
 					proxyOut.end();
 				} else {
-					proxyOut.write(JSON.stringify({valid: false}));
+					proxyOut.write(JSON.stringify({"valid": "false"}));
 					proxyOut.end();
 				}
 			} else {
-				proxyOut.write(JSON.stringify({valid: false}));
+				proxyOut.write(JSON.stringify({"valid": "false"}));
 				proxyOut.end();
 			}
 		});
